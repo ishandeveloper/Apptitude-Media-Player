@@ -1,4 +1,4 @@
-package com.example.hackathon_media_player
+package com.codenameakshay.plato
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -106,13 +106,13 @@ class _SearchedVideoState extends State<SearchedVideo> {
                             _controller?.value?.duration?.inSeconds,
                         valueColor: AlwaysStoppedAnimation(Color(0xff553DE8)),
                         backgroundColor: Colors.white,
-                        minHeight: 5,
+                        // minHeight: 5,
                       )
                     : LinearProgressIndicator(
                         // value: 0,
                         valueColor: AlwaysStoppedAnimation(Color(0xff553DE8)),
                         backgroundColor: Colors.white,
-                        minHeight: 5,
+                        // minHeight: 5,
                       ),
                 SizedBox(
                   height: 50,
@@ -275,11 +275,7 @@ class VideoControls extends StatelessWidget {
                 child: SliderTheme(
                     data: SliderThemeData(
                         thumbShape: CustomSliderThumbRect(
-                            min: 0,
-                            max: 10,
-                            thumbHeight: 40,
-                          
-                            thumbRadius: 20),
+                            min: 0, max: 10, thumbHeight: 40, thumbRadius: 20),
                         overlayShape:
                             RoundSliderOverlayShape(overlayRadius: 10),
                         thumbColor: Color(0xff553DE8),
