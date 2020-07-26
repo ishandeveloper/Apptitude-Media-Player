@@ -52,6 +52,7 @@ class _VideoFeedState extends State<VideoFeed> {
                           snapshot.data.documents[index]['url']));
 
                       return Video(
+                        url: snapshot.data.documents[index]['url'],
                         mainController: videoControllers[index],
                         postkey: index,
                         unmutePlayer: () {

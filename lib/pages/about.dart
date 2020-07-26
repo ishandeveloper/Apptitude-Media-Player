@@ -19,7 +19,8 @@ class AboutPage extends StatelessWidget {
                   height: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage('https://raw.githubusercontent.com/ishandeveloper/ishandeveloper.github.io/master/assets/img/profile2.jpg'))),
+                          image: NetworkImage(
+                              'https://raw.githubusercontent.com/ishandeveloper/ishandeveloper.github.io/master/assets/img/profile2.jpg'))),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0, left: 24),
@@ -29,7 +30,7 @@ class AboutPage extends StatelessWidget {
                       Text(
                         "Hey, I'm Ishan!",
                         style: TextStyle(
-                            color:Colors.white,
+                            color: Colors.white,
                             fontFamily: 'Poppins',
                             fontWeight: FontWeight.w700,
                             fontSize: 26),
@@ -40,10 +41,10 @@ class AboutPage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 24.0),
                         child: Text(
-                          "I make elegantly professional web apps and flutter apps for a living and also design user experiences. Each and every single interaction in this app is creafted with lots of love. If you want me to do any one of these for you, get in touch with me.",
+                          "I make elegantly professional web apps and flutter apps for a living and also design user experiences. Each and every single interaction in this app is crafted with lots of love. If you want me to do any one of these for you, get in touch with me.",
                           textAlign: TextAlign.justify,
                           style: TextStyle(
-                              color:Colors.white,
+                              color: Colors.white,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w400,
                               fontSize: 16.5),
@@ -109,7 +110,7 @@ class AboutPage extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14,
                               fontStyle: FontStyle.normal,
-                              color:Colors.white,
+                              color: Colors.white,
                             ),
                           ),
                           Text(
@@ -117,7 +118,7 @@ class AboutPage extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              color:Colors.white,
+                              color: Colors.white,
                             ),
                           ),
                         ],
@@ -173,18 +174,21 @@ class AboutButton extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color:Colors.white,
+                color: Colors.white,
                 size: 32,
               ),
               SizedBox(
                 width: 10,
               ),
-              Text(
-                title,
-                style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16.5),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.65,
+                child: Text(
+                  title,
+                  style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16.5),
+                ),
               )
             ],
           ),
