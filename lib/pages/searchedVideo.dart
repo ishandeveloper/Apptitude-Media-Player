@@ -75,7 +75,11 @@ class _SearchedVideoState extends State<SearchedVideo> {
                                   ? AspectRatio(
                                       aspectRatio:
                                           _controller.value.aspectRatio,
-                                      child: CachedVideoPlayer(_controller),
+                                      child: Hero(
+                                          tag: widget.url,
+                                          transitionOnUserGestures: true,
+                                          child:
+                                              CachedVideoPlayer(_controller)),
                                     )
                                   : CircularProgressIndicator(),
                             ),
@@ -117,6 +121,7 @@ class _SearchedVideoState extends State<SearchedVideo> {
                         // minHeight: 5,
                       ),
                 VideoInfo(widget: widget),
+                Spacer(),
                 VideoControls(controller: _controller, position: _position)
               ],
             ),

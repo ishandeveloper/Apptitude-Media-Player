@@ -1,10 +1,14 @@
 import 'dart:async';
 
 import 'package:cached_video_player/cached_video_player.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widgets/flutter_widgets.dart';
+import 'package:hackathon_media_player/components/videoFullScreenButton.dart';
 import 'package:hackathon_media_player/components/videoMetaData.dart';
+
+import '../pages/searchedVideo.dart';
 
 class Video extends StatefulWidget {
   final String url;
@@ -60,7 +64,18 @@ class _VideoState extends State<Video> {
       });
     } else {
       widget.mutePlayer();
+      setState(() {
+        muted = !muted;
+      });
     }
+  }
+
+  videoFullScreen() {
+    print(widget.url);
+    Navigator.push(
+        context,
+        CupertinoPageRoute(
+            builder: (context) => SearchedVideo(url: widget.url)));
   }
 
   @override
@@ -88,12 +103,16 @@ class _VideoState extends State<Video> {
                       child: _controller.value.initialized
                           ? AspectRatio(
                               aspectRatio: _controller.value.aspectRatio,
-                              child: CachedVideoPlayer(_controller),
+                              child: Hero(
+                                  tag: widget.url,
+                                  transitionOnUserGestures: true,
+                                  child: CachedVideoPlayer(_controller)),
                             )
                           : CircularProgressIndicator(),
                     ),
                   ),
-                  VideoMetaData(position: _position, muted: muted)
+                  VideoMetaData(position: _position, muted: muted),
+                  VideoFullScreenButton(onTap: videoFullScreen)
                 ],
               ),
             ),
