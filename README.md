@@ -44,7 +44,7 @@ Some Sneak Peeks ...
 <img src="./_readme_assets/1.jpg" width="45%">&nbsp;&nbsp;&nbsp;<img src="./_readme_assets/2.jpg" width="45%">
 
 ### Submission Demo Video
-<pre><a href="https://drive.google.com/file/d/13iNYkdnHS1KnWCR2Bs6kPI6IjHN2GO5m/view?usp=sharing">https://drive.google.com/file/d/13iNYkdnHS1KnWCR2Bs6kPI6IjHN2GO5m/view?usp=sharing</a></pre>
+<pre><a href="https://drive.google.com/file/d/13r7V3x5bRSjex8UHduvwbvJIOshX3d8K/view?usp=sharing">https://drive.google.com/file/d/13r7V3x5bRSjex8UHduvwbvJIOshX3d8K/view?usp=sharing</a></pre>
 
 #### Download The APK:
 and test it out on your devices!
