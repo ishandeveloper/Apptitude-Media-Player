@@ -240,7 +240,9 @@ class VideoControls extends StatelessWidget {
                           handlerSize: 0)),
                   min: 0,
                   initialValue: _controller.value.position.inSeconds.toDouble(),
-                  max: _controller.value.duration.inSeconds.toDouble(),
+                  max: _controller.value.duration == null
+                      ? 1
+                      : _controller.value.duration.inSeconds.toDouble(),
                   innerWidget: (val) {
                     return Container(
                       padding: EdgeInsets.all(10),
