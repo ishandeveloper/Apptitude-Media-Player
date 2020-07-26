@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:cached_video_player/cached_video_player.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hackathon_media_player/components/rectangularThumb.dart';
 import 'package:marquee/marquee.dart';
@@ -18,7 +20,7 @@ class SearchedVideo extends StatefulWidget {
 
 class _SearchedVideoState extends State<SearchedVideo> {
   Duration _position;
-
+  bool isFullScreen = false;
   bool muted = false;
 
   CachedVideoPlayerController _controller;
@@ -53,77 +55,124 @@ class _SearchedVideoState extends State<SearchedVideo> {
     });
   }
 
+  videoFullScreen() {
+    if (!isFullScreen)
+      SystemChrome.setEnabledSystemUIOverlays([]);
+    else
+      SystemChrome.setEnabledSystemUIOverlays(
+          [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+    setState(() {
+      isFullScreen = !isFullScreen;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xff1F2128),
         body: Container(
           child: SafeArea(
-            child: Column(
-              children: [
-                GestureDetector(
-                  child: ConstrainedBox(
+            top: !isFullScreen,
+            child: RotatedBox(
+              quarterTurns: isFullScreen ? 1 : 0,
+              child: Column(
+                children: [
+                  ConstrainedBox(
                     constraints: BoxConstraints(
-                        maxHeight: MediaQuery.of(context).size.height * 0.4),
+                        maxHeight: isFullScreen
+                            ? MediaQuery.of(context).size.width - 6
+                            : MediaQuery.of(context).size.height * 0.4),
                     child: AspectRatio(
                       aspectRatio: _controller.value.aspectRatio,
                       child: Stack(
                         children: [
-                          Container(
-                            child: Center(
-                              child: _controller.value.initialized
-                                  ? AspectRatio(
-                                      aspectRatio:
-                                          _controller.value.aspectRatio,
-                                      child: Hero(
-                                          tag: widget.url,
-                                          transitionOnUserGestures: true,
-                                          child:
-                                              CachedVideoPlayer(_controller)),
-                                    )
-                                  : CircularProgressIndicator(),
-                            ),
-                          ),
                           GestureDetector(
-                            onVerticalDragUpdate: (details) {
-                              if (details.delta.direction > 1 &&
-                                  details.delta.distance > 10) {
-                                Navigator.pop(context);
+                            child: Container(
+                              child: Center(
+                                child: _controller.value.initialized
+                                    ? AspectRatio(
+                                        aspectRatio:
+                                            _controller.value.aspectRatio,
+                                        child: Hero(
+                                            tag: widget.url,
+                                            transitionOnUserGestures: true,
+                                            child:
+                                                CachedVideoPlayer(_controller)),
+                                      )
+                                    : CircularProgressIndicator(),
+                              ),
+                            ),
+                            onTap: () {
+                              if (_controller.value.isPlaying) {
+                                _controller.pause();
+                              } else {
+                                _controller.play();
                               }
                             },
+                          ),
+                          Positioned(
+                            top: 5,
+                            left: 5,
+                            child: GestureDetector(
+                              onVerticalDragUpdate: (details) {
+                                if (details.delta.direction > 1 &&
+                                    details.delta.distance > 10) {
+                                  Navigator.pop(context);
+                                }
+                              },
+                              child: RotatedBox(
+                                  quarterTurns: 3,
+                                  child: IconButton(
+                                      icon: Icon(
+                                        Icons.arrow_back_ios,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      })),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 5,
+                            right: 5,
                             child: RotatedBox(
                                 quarterTurns: 3,
                                 child: IconButton(
-                                    icon: Icon(Icons.arrow_back_ios,
-                                        color: Colors.white),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    })),
+                                    icon: Icon(
+                                      Icons.fullscreen,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                    onPressed: videoFullScreen)),
                           )
                         ],
                       ),
                     ),
                   ),
-                ),
-                (_position?.inSeconds != null &&
-                        _controller?.value?.position != Duration())
-                    ? LinearProgressIndicator(
-                        value: _position.inSeconds /
-                            _controller?.value?.duration?.inSeconds,
-                        valueColor: AlwaysStoppedAnimation(Color(0xff553DE8)),
-                        backgroundColor: Colors.white,
-                        // minHeight: 5,
-                      )
-                    : LinearProgressIndicator(
-                        // value: 0,
-                        valueColor: AlwaysStoppedAnimation(Color(0xff553DE8)),
-                        backgroundColor: Colors.white,
-                        // minHeight: 5,
-                      ),
-                VideoInfo(widget: widget),
-                Spacer(),
-                VideoControls(controller: _controller, position: _position)
-              ],
+                  (_position?.inSeconds != null &&
+                          _controller?.value?.position != Duration())
+                      ? LinearProgressIndicator(
+                          value: _position.inSeconds /
+                              _controller?.value?.duration?.inSeconds,
+                          valueColor: AlwaysStoppedAnimation(Color(0xff553DE8)),
+                          backgroundColor: Colors.white,
+                          // minHeight: 5,
+                        )
+                      : LinearProgressIndicator(
+                          // value: 0,
+                          valueColor: AlwaysStoppedAnimation(Color(0xff553DE8)),
+                          backgroundColor: Colors.white,
+                          // minHeight: 5,
+                        ),
+                  isFullScreen ? Container() : VideoInfo(widget: widget),
+                  isFullScreen ? Container() : Spacer(),
+                  isFullScreen
+                      ? Container()
+                      : VideoControls(
+                          controller: _controller, position: _position)
+                ],
+              ),
             ),
           ),
         ));

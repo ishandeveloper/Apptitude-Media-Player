@@ -59,15 +59,12 @@ class _VideoState extends State<Video> {
   videoVolume() {
     if (muted) {
       widget.unmutePlayer();
-      setState(() {
-        muted = !muted;
-      });
     } else {
       widget.mutePlayer();
-      setState(() {
-        muted = !muted;
-      });
     }
+    setState(() {
+      muted = !muted;
+    });
   }
 
   videoFullScreen() {
