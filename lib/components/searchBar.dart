@@ -8,6 +8,7 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
+  TextEditingController controller = TextEditingController();
   bool isInvalidLink = false;
 
   void linkValidator(value) {
@@ -18,6 +19,7 @@ class _SearchBarState extends State<SearchBar> {
     if (url != null) {
       var link = url.input.substring(url.start, url.end);
       if (link.contains('.mp4')) {
+        controller.clear();
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -48,6 +50,7 @@ class _SearchBarState extends State<SearchBar> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 4.0),
               child: TextField(
+                controller: controller,
                 maxLines: 1,
                 minLines: 1,
                 onSubmitted: linkValidator,
