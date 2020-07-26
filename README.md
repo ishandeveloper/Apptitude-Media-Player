@@ -1,8 +1,8 @@
 #### Bachmanity Apptitude Submission
+<img src="./_readme_assets/hero.png" width="100%">
 
 ## Media Player
 
-<img src="./_readme_assets/icon.png" height="150px">
 
 ### Problem Statement
 
